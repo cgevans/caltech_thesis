@@ -3,8 +3,10 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{caltech_thesis}
 
+\newif\ifthesisdraft
+
 % Options
-\DeclareOption{draftversion}{\thesisdrafttrue}
+\DeclareOption{thesisdraft}{\thesisdrafttrue}
 \DeclareOption{defended}{\thesisdefendedtrue}
 
 \ProcessOptions\relax
@@ -92,10 +94,8 @@
 
     % Thesis regulations insist on every page having a number, apparently even blank pages
     % other than the title page.
-    \makeevenhead{empty}{\thepage}{}{}
-    \makeoddhead{empty}{}{}{\thepage}
-    \makeoddfoot{empty}{}{}{}
-    \makeevenfoot{empty}{}{}{}
+    \aliaspagestyle{empty}{plain}
+    \clearpage
 }
 
 % CHAPTER / HEADING FORMATTING, ETC
@@ -120,12 +120,12 @@
 \pagestyle{ctheadings}
 
 % In the case of a draft document, make this clear.
-\ifdraftdoc
+\ifthesisdraft
 \settimeformat{ampmtime}
 \makeevenfoot{plain}{}{}{\color{red} \textit{Draft: \today}}
 \makeoddfoot{plain}{\color{red}  \textit{Draft: \today, \currenttime}}{}{}
-\makeevenfoot{headings}{}{}{\color{red}  \textit{Draft: \today, \currenttime}}
-\makeoddfoot{headings}{\color{red} \textit{Draft: \today, \currenttime}}{}{}
+\makeevenfoot{ctheadings}{}{}{\color{red}  \textit{Draft: \today, \currenttime}}
+\makeoddfoot{ctheadings}{\color{red} \textit{Draft: \today, \currenttime}}{}{}
 \fi
 
 % Make the table of contents single-spaced, starting on a verso (even) page
@@ -140,7 +140,6 @@
 }
 
 % More formatting stuff
-
 \openright % Make chapters start on recto (odd) pages
 \setlength{\parindent}{6pt} % Indent paragraphs slightly
 \nonzeroparskip % But also put some space between them!
