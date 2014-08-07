@@ -4,10 +4,13 @@
 \ProvidesClass{caltech_thesis}
 
 \newif\ifthesisdraft
+\newif\ifversotoc
+\newif\ifthesisdefended
 
 % Options
 \DeclareOption{thesisdraft}{\thesisdrafttrue}
 \DeclareOption{defended}{\thesisdefendedtrue}
+\DeclareOption{versotoc}{\versotoctrue}
 
 \ProcessOptions\relax
 
@@ -47,6 +50,8 @@
 
 %\setmainfont[Ligatures=TeX,Numbers={Monospaced,Lining}]{Minion Pro}
 
+\def\deftext{\ifthesisdefended Defended\else To be Defended\fi}
+
 % TITLE PAGE / COPYRIGHT
 % ======================
 
@@ -84,7 +89,7 @@
         {\scshape California Institute of Technology}\\
         Pasadena, California\\
         2014\\
-        (Defended \@defensedate)
+        (\deftext\ \@defensedate)
     \end{center}
     \thispagestyle{empty}
     \clearpage
@@ -134,7 +139,7 @@
 \let\actualtableofcontents\tableofcontents
 \def\tableofcontents{%
     \SingleSpacing
-    \cleartoverso
+    \ifversotoc\cleartoverso\fi  
     \actualtableofcontents
     \OnehalfSpacing
 }
